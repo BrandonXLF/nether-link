@@ -1,36 +1,35 @@
 import ExitInfo from "@/types/exit-info";
-import { useState } from "react";
+import ExitListing from "./exit-listing";
 
-export default function CompResult({ exitInfo: { from, ideal, closest, nearby } }: Readonly<{
-	exitInfo: ExitInfo
+export default function CompResult({ exitInfo: { ideal, closest, nearby }, showAll }: Readonly<{
+	exitInfo: ExitInfo,
+	showAll: boolean
 }>) {
-	const [showAll, setShowAll] = useState(false);
-	const targetNode = closest?.[0].name ?? <i>New portal around {ideal.x}, {ideal.y}, {ideal.z}</i>;
+	if (!closest) {
+		return <div className="pl-4">
+			{'=>'} <em>New portal around {ideal.x}, {ideal.y}, {ideal.z}</em>
+		</div>;
+	}
 
-	let allOutput = <></>;
-
-	if (showAll && closest) {
+	if (showAll) {
 		nearby.sort((a, b) => {
 			return a[1] - b[1];
 		});
 
-		allOutput = <ul>
+		return <ul>
 			{nearby.map(([portal, dist]) => {
-				return <li key={portal.uuid} className="pl-4">{portal.name} <span className="text-sm"> ({Math.round(dist * 10) / 10} block offset)</span></li>;
+				return <li key={portal.uuid} className="pl-4">
+					<ExitListing portal={portal} dist={dist} />
+				</li>;
 			})}
 		</ul>;
 	}
 
-	return <div>
-		{from.name} {'=>'} {targetNode}{
-		closest
-			? <>
-				<span className="text-sm"> ({Math.round(closest[1] * 10) / 10} block offset)</span>{' '}
-				<button onClick={() => setShowAll(!showAll)}>{showAll ? 'Show less' : 'Show in-range'}</button>
-			</>
-			: ''
-		}
-		
-		{allOutput}
+	if (closest) {
+
+	}
+
+	return <div className="pl-4">
+		<ExitListing portal={closest[0]} dist={closest[1]} />
 	</div>;
 }

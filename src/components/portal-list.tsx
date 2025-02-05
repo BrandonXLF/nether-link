@@ -1,9 +1,11 @@
 import { useState } from "react";
 import PortalInput from "./portal-input";
 import Portal from "@/classes/Portal";
+import ExitInfo from "@/types/exit-info";
 
-export default function PortalList({ portals, portalsChanged, isNether }: Readonly<{
+export default function PortalList({ portals, getExits, portalsChanged, isNether }: Readonly<{
 	portals: Portal[],
+	getExits: () => Iterator<ExitInfo>,
 	portalsChanged: (newList: Portal[]) => void,
 	isNether: boolean
 }>) {
@@ -11,31 +13,36 @@ export default function PortalList({ portals, portalsChanged, isNether }: Readon
 		Portal.newBlank(isNether)
 	);
 
-	return <div>{[...portals, nextPortal].map(portal => {
+	const exits = getExits();
+
+	return <div>{[...portals, nextPortal].map((portal, i) => {
+		const exitInfo = exits.next().value;
 		const isNew = portal === nextPortal;
 
-		return <PortalInput
-			key={portal.uuid}
-			portal={portal}
-			placeholder={isNew ? 'Add portal...' : ''}
-			portalUpdated={(prop, value) => {
-				const newPortals = [...portals];
-				
-				if (isNew) {
-					newPortals.push(nextPortal);
-					nextPortal[prop] = value;
+		return <div key={portal.uuid} className="mb-2">
+			<PortalInput
+				portal={portal}
+				exitInfo={exitInfo}
+				isNew={isNew}
+				portalUpdated={(prop, value) => {
+					const newPortals = [...portals];
+					
+					if (isNew) {
+						newPortals.push(nextPortal);
+						nextPortal[prop] = value;
 
-					setNextPortal(Portal.newBlank(isNether));
-				} else {
-					portal[prop] = value;
-				}
+						setNextPortal(Portal.newBlank(isNether));
+					} else {
+						portal[prop] = value;
+					}
 
-				portalsChanged(newPortals);
-			}}
-			portalRemoved={() => {
-				const newPortals = portals.filter(iPortal => iPortal.uuid !== portal.uuid);
-				portalsChanged(newPortals);
-			}}
-		/>
+					portalsChanged(newPortals);
+				}}
+				portalRemoved={() => {
+					const newPortals = portals.filter(iPortal => iPortal.uuid !== portal.uuid);
+					portalsChanged(newPortals);
+				}}
+			/>
+		</div>
 	})}</div>;
 }

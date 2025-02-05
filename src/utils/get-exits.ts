@@ -1,4 +1,6 @@
 import Portal from "@/classes/Portal";
+import ExitInfo from "@/types/exit-info";
+import Pos from "@/types/pos";
 
 function inRange(from: Pos, to: Pos, isNether: boolean) {
 	const sqRadius = isNether ? 16 : 128;
@@ -9,8 +11,8 @@ function distance(from: Pos, to: Pos) {
 	return Math.sqrt(Math.pow(from.x - to.x, 2) + Math.pow(from.y - to.y, 2) + Math.pow(from.z - to.z, 2));
 }
 
-export default function getExits(fromList: Portal[], toList: Portal[]) {
-	return fromList.map(from => getExit(from, toList));
+export default function getExits(fromList: Portal[], toList: Portal[]): Map<Portal, ExitInfo> {
+	return new Map(fromList.map(from => [from, getExit(from, toList)]));
 }
 
 function getExit(fromPortal: Portal, toList: Portal[]): ExitInfo {
@@ -36,7 +38,6 @@ function getExit(fromPortal: Portal, toList: Portal[]): ExitInfo {
 	}
 
 	return {
-		from: fromPortal,
 		ideal: from,
 		closest: min ? [min, minDist] : null,
 		nearby: nearby
