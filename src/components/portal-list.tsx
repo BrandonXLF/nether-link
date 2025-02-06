@@ -19,7 +19,7 @@ export default function PortalList({ portals, getExits, portalsChanged, isNether
 		const exitInfo = exits.next().value;
 		const isNew = portal === nextPortal;
 
-		return <div key={portal.uuid} className="mb-2">
+		return <div key={portal.uuid} className="mb-4">
 			<PortalInput
 				portal={portal}
 				exitInfo={exitInfo}

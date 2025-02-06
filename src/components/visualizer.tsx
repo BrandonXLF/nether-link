@@ -28,11 +28,11 @@ export default function Visualizer({ exitMaps }: Readonly<{
 					<title>{from.name}</title>
 				</circle>
 			);
-			
+
 			if (toPos) {
 				const control = {
 					x: ((toPos.x + pos.x) / 2),
-					z: ((toPos.z + pos.z) / 2) * (toPos.z > pos.z ? 0.9 : 1.1)
+					z: ((toPos.z + pos.z) / 2) * (toPos.z > pos.z ? 0.998 : 1.002)
 				};
 
 				lines.push(
