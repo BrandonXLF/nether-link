@@ -44,7 +44,6 @@ export default function Tool() {
 
   return <div>
     <h1 className="text-3xl font-semibold mb-8">Nether Link</h1>
-
     <div className="flex w-full max-lg:flex-col">
       <div className="flex-1">
         <h2 className="text-lg font-semibold mt-4">Overworld Portals</h2>

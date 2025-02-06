@@ -7,7 +7,7 @@ export default function CompResult({ exitInfo: { ideal, closest, nearby }, showA
 	showAll?: boolean
 }>) {
 	if (!closest) {
-		return <div className="pl-4">
+		return <div>
 			{'=>'} <em>New portal around <Coord pos={ideal} /></em>
 		</div>;
 	}
@@ -19,14 +19,14 @@ export default function CompResult({ exitInfo: { ideal, closest, nearby }, showA
 
 		return <ul>
 			{nearby.map(([portal, dist]) => {
-				return <li key={portal.uuid} className="pl-4">
+				return <li key={portal.uuid}>
 					<ExitListing portal={portal} dist={dist} />
 				</li>;
 			})}
 		</ul>;
 	}
 
-	return <div className="pl-4">
+	return <div>
 		<ExitListing portal={closest[0]} dist={closest[1]} />
 	</div>;
 }

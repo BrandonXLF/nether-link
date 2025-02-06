@@ -7,9 +7,15 @@ export default function Mapping({ fromPortal, toPortal, bidirectional, reverse }
     bidirectional?: boolean,
     reverse?: boolean
 }>) {
-    return <span>
-        {fromPortal ? <PortalName portal={fromPortal} /> : <em>New portal</em>}
-        {bidirectional ? ' <=> ' : (reverse ? ' <= ' : ' => ')}
-        {toPortal ? <PortalName portal={toPortal} /> : <em>New portal</em>}
-    </span>;
+    return <>
+        <span className="pr-3">
+            {fromPortal ? <PortalName portal={fromPortal} /> : <em>New portal</em>}
+        </span>
+        <span>{(bidirectional || !reverse) ? '<' : ''}</span>
+        <span>=</span>
+        <span>{(bidirectional || reverse) ? '>' : ''}</span>
+        <span className="pl-3">
+            {toPortal ? <PortalName portal={toPortal} /> : <em>New portal</em>}
+        </span>
+    </>;
 }

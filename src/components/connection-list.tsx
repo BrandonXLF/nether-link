@@ -25,7 +25,9 @@ export default function ConnectionList({ overworldExits, netherExits }: Readonly
         mappings.push(<Mapping fromPortal={exit.closest?.[0]} toPortal={from} reverse={true} />);
     }
 
-    return <ul>
-        {mappings.map(mapping => <li>{mapping}</li>)}
-    </ul>;
+    return <div>
+        <ul className="inline-grid grid-cols-[auto_1fr_1fr_1fr_auto]">
+            {mappings.map(mapping => <li className="contents">{mapping}</li>)}
+        </ul>
+    </div>;
 }
