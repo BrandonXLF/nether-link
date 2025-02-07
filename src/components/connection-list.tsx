@@ -27,7 +27,12 @@ export default function ConnectionList({ overworldExits, netherExits }: Readonly
 
     return <div>
         <ul className="inline-grid grid-cols-[auto_1fr_1fr_1fr_auto]">
-            {mappings.map(mapping => <li className="contents">{mapping}</li>)}
+            {mappings.map(mapping => {
+                const props = (mapping.props as Parameters<typeof Mapping>[0]);
+                const key = props.fromPortal?.uuid + '&' + props.toPortal?.uuid;
+
+                return <li key={key} className="contents">{mapping}</li>
+            })}
         </ul>
     </div>;
 }
