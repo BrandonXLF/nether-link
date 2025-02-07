@@ -1,7 +1,7 @@
 import StoredPortal from "@/types/StoredPortal";
-import Positioned from "@/types/Positioned";
+import Point from "./Point";
 
-export default class Portal implements Positioned {
+export default class Portal extends Point {
 	static fromStored(stored: StoredPortal, isNether: boolean) {
 		return new Portal(stored.uuid, stored.name, stored.x, stored.y, stored.z, isNether);
 	}
@@ -13,12 +13,12 @@ export default class Portal implements Positioned {
 	public constructor(
 		public uuid: string,
 		public name: string,
-		public x: number,
-		public y: number,
-		public z: number,
+		x: number,
+		y: number,
+		z: number,
 		public isNether: boolean
 	) {
-
+		super(x, y, z);
 	}
 
 	private overworldToNether(c: number) {
@@ -29,24 +29,29 @@ export default class Portal implements Positioned {
 		return c * 8;
 	}
 
-	public getIdealExit(): Positioned {
+	public getIdealExit(): Point {
 		if (this.isNether) {
-			return {
-				x: this.netherToOverworld(this.x),
-				y: this.y,
-				z: this.netherToOverworld(this.z)
-			};
+			return new Point(
+				this.netherToOverworld(this.x),
+				this.y,
+				this.netherToOverworld(this.z)
+			);
 		}
 
-		return {
-			x: this.overworldToNether(this.x),
-			y: this.y,
-			z: this.overworldToNether(this.z)
-		};
+		return new Point(
+			this.overworldToNether(this.x),
+			this.y,
+			this.overworldToNether(this.z)
+		);
 	}
 
-	public getOverworldPos(): Positioned {
+	public getOverworldPos(): Point {
 		return this.isNether ? this.getIdealExit() : this;
+	}
+
+	toString() {
+		const coordStr = `${this.x}, ${this.y}, ${this.z}`;
+		return this.name ? `${this.name} (${coordStr})` : coordStr;
 	}
 
 	toStored(): StoredPortal {

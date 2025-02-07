@@ -25,7 +25,7 @@ export default function Visualizer({ exitMaps }: Readonly<{
 
 			circles.push(
 				<circle key={from.uuid} cx={pos.x} cy={pos.z} r="1.5%" className={fill}>
-					<title>{from.name}</title>
+					<title>{from.toString()}</title>
 				</circle>
 			);
 

@@ -1,6 +1,5 @@
 import ExitInfo from "@/types/ExitInfo";
 import ExitListing from "./exit-listing";
-import Coord from "./coord";
 
 export default function CompResult({ exitInfo: { ideal, closest, nearby }, showAll }: Readonly<{
 	exitInfo: ExitInfo,
@@ -8,7 +7,7 @@ export default function CompResult({ exitInfo: { ideal, closest, nearby }, showA
 }>) {
 	if (!closest) {
 		return <div>
-			{'=>'} <em>New portal around <Coord pos={ideal} /></em>
+			{'=>'} <em>New portal around {ideal.toString()}</em>
 		</div>;
 	}
 

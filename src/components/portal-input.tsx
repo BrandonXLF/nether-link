@@ -2,7 +2,6 @@ import Portal from "@/classes/Portal";
 import ExitInfo from "@/types/ExitInfo";
 import { FormEvent, useState } from "react"
 import CompResult from "./comp-result";
-import Coord from "./coord";
 
 export default function PortalInput({ portal, exitInfo, isNew, portalUpdated, portalRemoved }: Readonly<{
 	portal: Portal,
@@ -25,7 +24,7 @@ export default function PortalInput({ portal, exitInfo, isNew, portalUpdated, po
 		<input
 			value={portal.name}
 			onInput={e => portalUpdated('name', (e.target as HTMLInputElement).value)}
-			placeholder={isNew ? 'Add portal...' : ''}
+			placeholder={isNew ? 'Add portal...' : 'Label'}
 			className={`w-28 ${portal.isNether ? "text-red-900" : "text-green-700"}`}
 		/>
 		<div>
@@ -43,7 +42,7 @@ export default function PortalInput({ portal, exitInfo, isNew, portalUpdated, po
 						</label>
 					</div>
 					{exitInfo && <div className="pt-1">
-						{portal.isNether ? 'Overworld' : 'Nether'}: <Coord pos={exitInfo.ideal} />
+						{portal.isNether ? 'Overworld' : 'Nether'}: {exitInfo.ideal.toString()}
 					</div>}
 				</div>
 				<span className="inline-flex gap-2 pl-2">
