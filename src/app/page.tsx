@@ -43,25 +43,26 @@ export default function Tool() {
   const netherExits = getExits(nether, overworld);
 
   return <div>
-    <h1 className="text-3xl font-semibold mb-8">Nether Link</h1>
-    <div className="flex w-full max-lg:flex-col">
-      <div className="flex-1">
-        <Heading>Overworld Portals</Heading>
-        {!loaded
-          ? 'Loading...'
-          : <PortalList portals={overworld} getExits={() => overworldExits.values()} portalsChanged={setOverworld} isNether={false} />}
+    <hgroup className="border-b border-gray-400 pb-8">
+      <h1 className="text-3xl font-semibold mt-8 mb-2">Nether Link</h1>
+      <p>Coordinate Minecraft Nether portals.</p>
+    </hgroup>
+    <div className="flex-1">
+      <Heading>Overworld Portals</Heading>
+      {!loaded
+        ? 'Loading...'
+        : <PortalList portals={overworld} getExits={() => overworldExits.values()} portalsChanged={setOverworld} isNether={false} />}
 
-        <Heading>Nether Portals</Heading>
-        {!loaded
-          ? 'Loading...'
-          : <PortalList portals={nether} getExits={() => netherExits.values()} portalsChanged={setNether} isNether={true} />}
-      </div>
-      <div className="flex-0">
-        <Heading>Overlay Map</Heading>
-        <Visualizer exitMaps={[overworldExits, netherExits]} />
-        <Heading>Connections</Heading>
-        <ConnectionList overworldExits={overworldExits} netherExits={netherExits} />
-      </div>
+      <Heading>Nether Portals</Heading>
+      {!loaded
+        ? 'Loading...'
+        : <PortalList portals={nether} getExits={() => netherExits.values()} portalsChanged={setNether} isNether={true} />}
+    </div>
+    <div className="flex-0">
+      <Heading>Overlay Map</Heading>
+      <Visualizer exitMaps={[overworldExits, netherExits]} />
+      <Heading>Connections</Heading>
+      <ConnectionList overworldExits={overworldExits} netherExits={netherExits} />
     </div>
   </div>
 }
