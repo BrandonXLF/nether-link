@@ -15,7 +15,7 @@ export default function PortalList({ portals, getExits, portalsChanged, isNether
 
 	const exits = getExits();
 
-	return <div>{[...portals, nextPortal].map((portal, i) => {
+	return <div>{[...portals, nextPortal].map(portal => {
 		const exitInfo = exits.next().value;
 		const isNew = portal === nextPortal;
 
