@@ -1,5 +1,5 @@
 import Portal from "@/classes/Portal";
-import ExitInfo from "@/types/exit-info";
+import ExitInfo from "@/types/ExitInfo";
 import Mapping from "./mapping";
 
 export default function ConnectionList({ overworldExits, netherExits }: Readonly<{

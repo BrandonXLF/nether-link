@@ -1,5 +1,5 @@
 import Portal from "@/classes/Portal";
-import ExitInfo from "@/types/exit-info";
+import ExitInfo from "@/types/ExitInfo";
 import { FormEvent, useState } from "react"
 import CompResult from "./comp-result";
 import Coord from "./coord";

@@ -1,7 +1,7 @@
-import Pos from "@/types/pos";
-import StoredPortal from "@/types/stored-portal";
+import StoredPortal from "@/types/StoredPortal";
+import Positioned from "@/types/Positioned";
 
-export default class Portal implements Pos {
+export default class Portal implements Positioned {
 	static fromStored(stored: StoredPortal, isNether: boolean) {
 		return new Portal(stored.uuid, stored.name, stored.x, stored.y, stored.z, isNether);
 	}
@@ -29,7 +29,7 @@ export default class Portal implements Pos {
 		return c * 8;
 	}
 
-	public getIdealExit(): Pos {
+	public getIdealExit(): Positioned {
 		if (this.isNether) {
 			return {
 				x: this.netherToOverworld(this.x),
@@ -45,7 +45,7 @@ export default class Portal implements Pos {
 		};
 	}
 
-	public getOverworldPos(): Pos {
+	public getOverworldPos(): Positioned {
 		return this.isNether ? this.getIdealExit() : this;
 	}
 

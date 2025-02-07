@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PortalInput from "./portal-input";
 import Portal from "@/classes/Portal";
-import ExitInfo from "@/types/exit-info";
+import ExitInfo from "@/types/ExitInfo";
 
 export default function PortalList({ portals, getExits, portalsChanged, isNether }: Readonly<{
 	portals: Portal[],

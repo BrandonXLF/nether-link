@@ -5,7 +5,7 @@ import ConnectionList from "@/components/connection-list";
 import Mapping from "@/components/mapping";
 import PortalList from "@/components/portal-list";
 import Visualizer from "@/components/visualizer";
-import StoredPortal from "@/types/stored-portal";
+import StoredPortal from "@/types/StoredPortal";
 import getExits from "@/utils/get-exits";
 import { useEffect, useState } from "react";
 

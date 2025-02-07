@@ -1,5 +1,5 @@
 import Portal from "@/classes/Portal";
-import ExitInfo from "@/types/exit-info";
+import ExitInfo from "@/types/ExitInfo";
 import Pos from "@/types/pos";
 
 function inRange(from: Pos, to: Pos, isNether: boolean) {

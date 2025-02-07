@@ -1,5 +1,5 @@
 import Portal from "@/classes/Portal";
-import ExitInfo from "@/types/exit-info";
+import ExitInfo from "@/types/ExitInfo";
 
 export default function Visualizer({ exitMaps }: Readonly<{
 	exitMaps: Map<Portal, ExitInfo>[]

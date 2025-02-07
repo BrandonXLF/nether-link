@@ -1,4 +1,4 @@
-import ExitInfo from "@/types/exit-info";
+import ExitInfo from "@/types/ExitInfo";
 import ExitListing from "./exit-listing";
 import Coord from "./coord";
 
