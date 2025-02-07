@@ -2,7 +2,7 @@
 
 import Portal from "@/classes/Portal";
 import ConnectionList from "@/components/connection-list";
-import Mapping from "@/components/mapping";
+import Heading from "@/components/heading";
 import PortalList from "@/components/portal-list";
 import Visualizer from "@/components/visualizer";
 import StoredPortal from "@/types/StoredPortal";
@@ -46,20 +46,20 @@ export default function Tool() {
     <h1 className="text-3xl font-semibold mb-8">Nether Link</h1>
     <div className="flex w-full max-lg:flex-col">
       <div className="flex-1">
-        <h2 className="text-lg font-semibold mt-4">Overworld Portals</h2>
+        <Heading>Overworld Portals</Heading>
         {!loaded
           ? 'Loading...'
           : <PortalList portals={overworld} getExits={() => overworldExits.values()} portalsChanged={setOverworld} isNether={false} />}
 
-        <h2 className="text-lg font-semibold mt-4">Nether Portals</h2>
+        <Heading>Nether Portals</Heading>
         {!loaded
           ? 'Loading...'
           : <PortalList portals={nether} getExits={() => netherExits.values()} portalsChanged={setNether} isNether={true} />}
       </div>
       <div className="flex-0">
-        <h2 className="text-lg font-semibold mt-4">Overlay Map</h2>
+        <Heading>Overlay Map</Heading>
         <Visualizer exitMaps={[overworldExits, netherExits]} />
-        <h2 className="text-lg font-semibold mt-4">Connections</h2>
+        <Heading>Connections</Heading>
         <ConnectionList overworldExits={overworldExits} netherExits={netherExits} />
       </div>
     </div>
