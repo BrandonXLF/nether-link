@@ -47,22 +47,33 @@ export default function Tool() {
       <h1 className="text-3xl font-semibold mt-8 mb-2">Nether Link</h1>
       <p>Coordinate Minecraft Nether portals.</p>
     </hgroup>
-    <div className="flex-1">
-      <Heading>Overworld Portals</Heading>
-      {!loaded
-        ? 'Loading...'
-        : <PortalList portals={overworld} getExits={() => overworldExits.values()} portalsChanged={setOverworld} isNether={false} />}
-
-      <Heading>Nether Portals</Heading>
-      {!loaded
-        ? 'Loading...'
-        : <PortalList portals={nether} getExits={() => netherExits.values()} portalsChanged={setNether} isNether={true} />}
-    </div>
-    <div className="flex-0">
-      <Heading>Overlay Map</Heading>
-      <Visualizer exitMaps={[overworldExits, netherExits]} />
-      <Heading>Connections</Heading>
-      <ConnectionList overworldExits={overworldExits} netherExits={netherExits} />
+    <div className="flex justify-between flex-wrap">
+      <div className="flex-1 max-lg:basis-full">
+        <div className="pb-4 lg:pr-4">
+          <Heading>Overworld Portals</Heading>
+          {!loaded
+            ? 'Loading...'
+            : <PortalList portals={overworld} getExits={() => overworldExits.values()} portalsChanged={setOverworld} isNether={false} />}
+        </div>
+        <div className="border-t border-gray-400 pb-4 lg:pr-4">
+          <Heading>Nether Portals</Heading>
+          {!loaded
+            ? 'Loading...'
+            : <PortalList portals={nether} getExits={() => netherExits.values()} portalsChanged={setNether} isNether={true} />}
+        </div>
+      </div>
+      <div className="flex-1 flex flex-col lg:max-w-md lg:border-l max-lg:border-t border-gray-400">
+        <div className="lg:pl-4 pb-4">
+          <Heading>Overlay Map</Heading>
+          <div className="max-w-md">
+            <Visualizer exitMaps={[overworldExits, netherExits]} />
+          </div>
+        </div>
+        <div className="border-t border-gray-400 lg:pl-4 pb-4">
+          <Heading>Connections</Heading>
+          <ConnectionList overworldExits={overworldExits} netherExits={netherExits} />
+        </div>
+      </div>
     </div>
   </div>
 }

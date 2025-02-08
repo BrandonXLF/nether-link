@@ -46,7 +46,7 @@ export default function Visualizer({ exitMaps }: Readonly<{
 		}
 	}
 
-	return <svg className="w-96 border-solid border-gray-200 border aspect-square stroke-[0.5%]" viewBox={`${minX - 5}, ${minZ - 5}, ${maxX - minX + 10}, ${maxZ - minZ + 10}`}>
+	return <svg className="w-full border border-solid border-gray-200 aspect-square stroke-[0.5%]" viewBox={`${minX - 5}, ${minZ - 5}, ${maxX - minX + 10}, ${maxZ - minZ + 10}`}>
 		<defs>
 			<marker
 				id="arrow"
