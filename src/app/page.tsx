@@ -52,19 +52,19 @@ export default function Tool() {
             ? 'Loading...'
             : <PortalList portals={overworld} getExits={() => overworldExits.values()} portalsChanged={setOverworld} isNether={false} />}
         </Box>
-        <Box title="Nether Portals" className="border-t border-gray-400">
+        <Box title="Nether Portals" className="border-t border-gray-500">
           {!loaded
             ? 'Loading...'
             : <PortalList portals={nether} getExits={() => netherExits.values()} portalsChanged={setNether} isNether={true} />}
         </Box>
       </div>
-      <div className="flex-1 flex flex-col lg:max-w-md lg:border-l max-lg:border-t border-gray-400">
+      <div className="flex-1 flex flex-col lg:max-w-md lg:border-l max-lg:border-t border-gray-500">
         <Box title="Overlay Map">
           <div className="max-w-md">
             <Visualizer exitMaps={[overworldExits, netherExits]} />
           </div>
         </Box>
-        <Box title="Connections" className="border-t border-gray-400">
+        <Box title="Connections" className="border-t border-gray-500">
           <ConnectionList overworldExits={overworldExits} netherExits={netherExits} />
         </Box>
       </div>

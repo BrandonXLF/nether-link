@@ -2,7 +2,7 @@ import Point from "@/classes/Point";
 import Portal from "@/classes/Portal";
 
 export default function PortalName({ portal }: Readonly<{ portal: Portal }>) {
-    const color = portal.isNether ? "text-red-900" : "text-green-700";
+    const color = portal.isNether ? "text-red-400" : "text-green-300";
 
     if (!portal.name) {
         return <span className={color}>{portal.toString()}</span>;

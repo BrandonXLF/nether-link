@@ -25,20 +25,20 @@ export default function PortalInput({ portal, exitInfo, isNew, portalUpdated, po
 			value={portal.name}
 			onInput={e => portalUpdated('name', (e.target as HTMLInputElement).value)}
 			placeholder={isNew ? 'Add portal...' : 'Label'}
-			className={`w-28 ${portal.isNether ? "text-red-900" : "text-green-700"}`}
+			className={`w-28 ${portal.isNether ? "text-red-400" : "text-green-300"}`}
 		/>
 		<div>
 			<div className="flex items-start gap-3">
 				<div>
 					<div className="flex gap-2">
 						<label>
-							x: <input type="number" defaultValue={portal.x} onChange={e => XYZChanged('x', e)} className="w-12 border-b border-black" />
+							x: <input type="number" defaultValue={portal.x} onChange={e => XYZChanged('x', e)} className="w-12 border-b border-white" />
 						</label>
 						<label>
-							y: <input type="number" defaultValue={portal.y} onChange={e => XYZChanged('y', e)} className="w-12 border-b border-black" />
+							y: <input type="number" defaultValue={portal.y} onChange={e => XYZChanged('y', e)} className="w-12 border-b border-white" />
 						</label>
 						<label>
-							z: <input type="number" defaultValue={portal.z} onChange={e => XYZChanged('z', e)} className="w-12 border-b border-black" />
+							z: <input type="number" defaultValue={portal.z} onChange={e => XYZChanged('z', e)} className="w-12 border-b border-white" />
 						</label>
 					</div>
 					{exitInfo && <div className="pt-1">
