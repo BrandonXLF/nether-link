@@ -27,7 +27,7 @@ export default function Tool() {
     setOverworld(loadArray('overworld', false));
     setNether(loadArray('nether', true));
     setLoaded(true);
-}, [])
+  }, [])
 
   useEffect(() => {
     if (!loaded) return;
