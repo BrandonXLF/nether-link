@@ -8,6 +8,7 @@ import Visualizer from "@/components/visualizer";
 import StoredPortal from "@/types/StoredPortal";
 import getExits from "@/utils/get-exits";
 import { useEffect, useState } from "react";
+import MainHeading from "@/components/main-heading";
 
 function loadArray(name: string, isNether: boolean) {
   try {
@@ -43,10 +44,7 @@ export default function Tool() {
   const netherExits = getExits(nether, overworld);
 
   return <div>
-    <hgroup className="border-b border-gray-400 pb-8">
-      <h1 className="text-3xl font-semibold mt-8 mb-2">Nether Link</h1>
-      <p>Coordinate Minecraft Nether portals.</p>
-    </hgroup>
+    <MainHeading />
     <div className="flex justify-between flex-wrap">
       <div className="flex-1 max-lg:basis-full">
         <Box title="Overworld Portals">

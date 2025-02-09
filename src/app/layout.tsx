@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="m-4">
+      <body>
         <main className="m-auto max-w-6xl">
           {children}
         </main>
