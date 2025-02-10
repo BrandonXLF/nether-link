@@ -53,9 +53,9 @@ export default function Visualizer({ exitMaps }: Readonly<{
 				viewBox="0 0 10 10"
 				refX="15"
 				refY="5"
-				markerWidth="1.5%"
-				markerHeight="1.5%"
-				markerUnits="strokeWidth"
+				markerWidth={(maxX - minX) / 100}
+				markerHeight={(maxZ - minZ) / 100}
+				markerUnits="userSpaceOnUse"
 				orient="auto-start-reverse"
 				className="fill-slate-500"
 			>

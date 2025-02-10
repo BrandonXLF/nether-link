@@ -3,16 +3,14 @@ import PortalInput from "./portal-input";
 import Portal from "@/classes/Portal";
 import ExitInfo from "@/types/ExitInfo";
 
-export default function PortalList({ portals, getExits, portalsChanged, isNether }: Readonly<{
+export default function PortalList({ portals, getExits, portalsChanged, isNether, showExitOnly }: Readonly<{
 	portals: Portal[],
 	getExits: () => Iterator<ExitInfo>,
 	portalsChanged: (newList: Portal[]) => void,
-	isNether: boolean
+	isNether: boolean,
+	showExitOnly?: boolean
 }>) {
-	const [nextPortal, setNextPortal] = useState<Portal>(
-		Portal.newBlank(isNether)
-	);
-
+	const [nextPortal, setNextPortal] = useState<Portal>(Portal.newBlank(isNether));
 	const exits = getExits();
 
 	return <div>{[...portals, nextPortal].map(portal => {
@@ -24,6 +22,7 @@ export default function PortalList({ portals, getExits, portalsChanged, isNether
 				portal={portal}
 				exitInfo={exitInfo}
 				isNew={isNew}
+				showExitOnly={showExitOnly}
 				portalUpdated={(prop, value) => {
 					const newPortals = [...portals];
 					

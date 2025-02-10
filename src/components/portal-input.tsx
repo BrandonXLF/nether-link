@@ -1,17 +1,16 @@
 import Portal from "@/classes/Portal";
 import ExitInfo from "@/types/ExitInfo";
-import { FormEvent, useState } from "react"
+import { FormEvent } from "react"
 import CompResult from "./comp-result";
 
-export default function PortalInput({ portal, exitInfo, isNew, portalUpdated, portalRemoved }: Readonly<{
+export default function PortalInput({ portal, exitInfo, isNew, showExitOnly, portalUpdated, portalRemoved }: Readonly<{
 	portal: Portal,
 	exitInfo: ExitInfo,
 	isNew?: boolean,
+	showExitOnly?: boolean,
 	portalUpdated: (prop: keyof Portal, value: Portal[typeof prop]) => void,
 	portalRemoved: () => void
 }>) {
-	const [showAll, setShowAll] = useState(false);
-
 	function XYZChanged(key: 'x' | 'y' | 'z', e: FormEvent<HTMLInputElement>) {
 		const value = (e.target as HTMLInputElement).valueAsNumber;
 
@@ -24,6 +23,7 @@ export default function PortalInput({ portal, exitInfo, isNew, portalUpdated, po
 		<input
 			value={portal.name}
 			onInput={e => portalUpdated('name', (e.target as HTMLInputElement).value)}
+			title="Label"
 			placeholder={isNew ? 'Add portal...' : 'Label'}
 			className={`w-28 ${portal.isNether ? "text-red-400" : "text-green-300"}`}
 		/>
@@ -45,13 +45,12 @@ export default function PortalInput({ portal, exitInfo, isNew, portalUpdated, po
 						{portal.isNether ? 'Overworld' : 'Nether'}: {exitInfo.ideal.toString()}
 					</div>}
 				</div>
-				<span className="inline-flex gap-2 pl-2">
-					{exitInfo && <button className="border rounded-md px-2 py-1" onClick={() => setShowAll(!showAll)}>{showAll ? 'Show exit' : 'Show in-range'}</button>}
-					{!isNew && <button className="border rounded-md px-2 py-1" onClick={() => portalRemoved()}>Delete</button>}
+				<span className="inline-flex gap-4 pl-2">
+					{!isNew && <button className="border px-2 py-1" onClick={() => portalRemoved()}>Delete</button>}
 				</span>
 			</div>
 			{exitInfo && <div className="pt-1">
-				<CompResult exitInfo={exitInfo} showAll={showAll} />
+				<CompResult exitInfo={exitInfo} showExitOnly={showExitOnly} />
 			</div>}
 		</div>
 	</div>

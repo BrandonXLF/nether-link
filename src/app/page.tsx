@@ -9,6 +9,7 @@ import StoredPortal from "@/types/StoredPortal";
 import getExits from "@/utils/get-exits";
 import { useEffect, useState } from "react";
 import MainHeading from "@/components/main-heading";
+import BooleanButtons from "@/components/boolean-buttons";
 
 function loadArray(name: string, isNether: boolean) {
   try {
@@ -23,6 +24,7 @@ export default function Tool() {
   const [overworld, setOverworld] = useState<Portal[]>([]);
   const [nether, setNether] = useState<Portal[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [showExitOnly, setShowExitOnly] = useState(true);
 
   useEffect(()=> {
     setOverworld(loadArray('overworld', false));
@@ -45,17 +47,37 @@ export default function Tool() {
 
   return <div>
     <MainHeading />
+    <Box className="border-b border-gray-500">
+      <BooleanButtons
+        trueText="Show exits"
+        falseText="Show all in range"
+        value={showExitOnly}
+        onChange={setShowExitOnly}
+      />
+    </Box>
     <div className="flex justify-between flex-wrap">
       <div className="flex-1 max-lg:basis-full">
         <Box title="Overworld Portals">
           {!loaded
             ? 'Loading...'
-            : <PortalList portals={overworld} getExits={() => overworldExits.values()} portalsChanged={setOverworld} isNether={false} />}
+            : <PortalList
+              portals={overworld}
+              getExits={() => overworldExits.values()}
+              portalsChanged={setOverworld}
+              isNether={false}
+              showExitOnly={showExitOnly}
+            />}
         </Box>
         <Box title="Nether Portals" className="border-t border-gray-500">
           {!loaded
             ? 'Loading...'
-            : <PortalList portals={nether} getExits={() => netherExits.values()} portalsChanged={setNether} isNether={true} />}
+            : <PortalList
+              portals={nether}
+              getExits={() => netherExits.values()}
+              portalsChanged={setNether}
+              isNether={true}
+              showExitOnly={showExitOnly}
+            />}
         </Box>
       </div>
       <div className="flex-1 flex flex-col lg:max-w-md lg:border-l max-lg:border-t border-gray-500">
