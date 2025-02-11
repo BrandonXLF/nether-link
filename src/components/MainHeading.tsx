@@ -1,9 +1,10 @@
+import { metadata } from "@/app/layout";
 import Box from "./Box";
 
 export default function MainHeading() {
 	return <hgroup className="relative border-b border-gray-500 bg-red-950 min-h-20">
-		<Box level={1} title="Nether Link" className="relative z-10">
-			<p>Manage Minecraft Nether portal positions</p>
+		<Box level={1} title={metadata.title as string} className="relative z-10">
+			<p>{metadata.description}</p>
 		</Box>
 		<div className="absolute h-full left-full top-0">
 			<svg className="absolute h-full right-full" viewBox="0 0 25 10">
