@@ -11,8 +11,6 @@ export default function MainHeading() {
 		<Head>
 			<title>{metadata.title}</title>
 			<meta name="description" content={metadata.description} />
-			<meta property="og:title" content={metadata.title} />
-			<meta property="og:description" content={metadata.description} />
 		</Head>
 		<Box level={1} title={metadata.title} className="relative z-10">
 			<p>{metadata.description}</p>
