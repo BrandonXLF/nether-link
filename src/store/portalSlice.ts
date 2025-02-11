@@ -1,5 +1,4 @@
 import Portal from '@/types/Portal'
-import { nextPortalId } from '@/utils/portalUtils'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createTransform, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -28,7 +27,7 @@ export const portalSlice = createSlice({
       id: string,
       portal: Portal
     }>) => {
-      state[action.payload.type][nextPortalId()] = action.payload.portal;
+      state[action.payload.type][action.payload.id] = action.payload.portal;
     },
     remove: (state, action: PayloadAction<{
       type: keyof PortalStoreState,

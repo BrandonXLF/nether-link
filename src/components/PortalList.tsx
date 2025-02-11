@@ -22,7 +22,6 @@ export default function PortalList({ type, isNether }: Readonly<{
 	] as [string, Portal]), [isNether]);
 
 	const [nextPortal, setNextPortal] = useState<[string, Portal]>(makeNext);
-
 	const portals = useAppSelector(state => state.portals[type]);
 	const exits = useAppSelector(portalTypeMap[type]);
 	const dispatch = useAppDispatch();
@@ -42,7 +41,7 @@ export default function PortalList({ type, isNether }: Readonly<{
 							[prop]: value
 						} }));
 
-						setNextPortal(makeNext);
+						setNextPortal(makeNext());
 						return;
 					}
 	
