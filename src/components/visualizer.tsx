@@ -1,12 +1,22 @@
 import { useAppSelector } from "@/store/hooks";
 import { selectNetherExits, selectOverworldExits } from "@/store/selectExitMaps";
 import { getOverworldPos, showPortal } from "@/utils/portalUtils";
+import ExitInfo from "@/types/ExitInfo";
+import { useRef } from "react";
 
 export default function Visualizer() {
 	const exitLists = [
 		useAppSelector(selectOverworldExits),
 		useAppSelector(selectNetherExits)
 	];
+
+	const lastExitLists = useRef<Record<string, ExitInfo>[]>([]);
+	const version = useRef(0);
+
+	if (exitLists.find((exits, i) => exits !== lastExitLists.current[i])) {
+		lastExitLists.current = exitLists;
+		version.current++;
+	}
 
 	let minX = Infinity
 	let maxX = -Infinity;
@@ -42,7 +52,7 @@ export default function Visualizer() {
 
 				lines.push(
 					<path
-						key={id}
+						key={`${id}v${version.current}`}
 						d={`M ${pos.x} ${pos.z} Q ${control.x} ${control.z} ${toPos.x} ${toPos.z}`}
 						markerEnd="url(#arrow)"
 					/>
@@ -58,9 +68,9 @@ export default function Visualizer() {
 				viewBox="0 0 10 10"
 				refX="15"
 				refY="5"
-				markerWidth={(maxX - minX) / 100}
-				markerHeight={(maxZ - minZ) / 100}
-				markerUnits="userSpaceOnUse"
+				markerWidth="6"
+				markerHeight="6"
+				markerUnits="strokeWidth"
 				orient="auto-start-reverse"
 				className="fill-slate-500"
 			>
