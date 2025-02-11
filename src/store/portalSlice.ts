@@ -1,9 +1,9 @@
 import Portal from '@/types/Portal'
 import { nextPortalId } from '@/utils/portalUtils'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import StoredPortal from '@/types/StoredPortal';
 import { createTransform, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { loadArray, toSaveable } from '@/utils/portalStoreUtils';
 
 export interface PortalStoreState {
   overworld: Record<string, Portal>,
@@ -48,25 +48,6 @@ export const portalSlice = createSlice({
 })
 
 export const { load, add, remove, update } = portalSlice.actions
-
-function toSaveable(list: Record<string, Portal>): StoredPortal[] {
-  return Object.entries(list).map(([, portal]) => ({
-    x: portal.x,
-    y: portal.y,
-    z: portal.z,
-    name: portal.name
-  }));
-}
-
-function loadArray(storedArr: Portal[], isNether: boolean): Record<string, Portal> {
-  const portalList: Record<string, Portal> = {};
-
-  for (const storedPortal of storedArr) {
-    portalList[nextPortalId()] = { ...storedPortal, isNether };
-  }
-
-  return portalList;
-}
 
 export default persistReducer({
   keyPrefix: 'nether-link-',

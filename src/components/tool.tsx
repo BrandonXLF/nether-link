@@ -5,11 +5,13 @@ import Box from "@/components/Box";
 import PortalList from "@/components/PortalList";
 import Visualizer from "@/components/Visualizer";
 import ShowAllToggle from "./ShowAllToggle";
+import FileIO from "./FileIO";
 
 export default function Tool() {
   return <>
-    <Box className="border-b border-gray-500">
+    <Box className="flex flex-wrap gap-2 justify-between border-b border-gray-500">
       <ShowAllToggle />
+      <FileIO />
     </Box>
     <div className="flex justify-between flex-wrap">
       <div className="flex-1 max-lg:basis-full">
