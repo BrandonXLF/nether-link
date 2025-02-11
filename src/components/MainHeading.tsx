@@ -1,17 +1,8 @@
-import Head from "next/head";
+import metadata from "@/metadata";
 import Box from "./Box";
-
-const metadata = {
-	title: "Nether Link",
-	description: "Manage Minecraft Nether portal positions.",
-};
 
 export default function MainHeading() {
 	return <hgroup className="relative border-b border-gray-500 bg-red-950 min-h-20">
-		<Head>
-			<title>{metadata.title}</title>
-			<meta name="description" content={metadata.description} />
-		</Head>
 		<Box level={1} title={metadata.title} className="relative z-10">
 			<p>{metadata.description}</p>
 		</Box>
