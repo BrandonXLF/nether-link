@@ -3,6 +3,7 @@ import { FormEvent } from "react"
 import CompResult from "./CompResult";
 import Portal from "@/types/Portal";
 import { showPoint } from "@/utils/pointUtils";
+import CoordInput from "./CoordInput";
 
 export default function PortalInput({ data, exitInfo, isNew, portalUpdated, portalRemoved }: Readonly<{
 	data: Portal,
@@ -11,14 +12,6 @@ export default function PortalInput({ data, exitInfo, isNew, portalUpdated, port
 	portalUpdated: (prop: keyof Portal, value: Portal[typeof prop]) => void,
 	portalRemoved: () => void
 }>) {
-	function XYZChanged(key: 'x' | 'y' | 'z', e: FormEvent<HTMLInputElement>) {
-		const value = (e.target as HTMLInputElement).valueAsNumber;
-
-		if (Number.isNaN(value)) return;
-
-		portalUpdated(key, value);
-	}
-
 	return <div className="flex items-start">
 		<input
 			value={data.name}
@@ -31,15 +24,9 @@ export default function PortalInput({ data, exitInfo, isNew, portalUpdated, port
 			<div className="flex items-start gap-3">
 				<div>
 					<div className="flex gap-2">
-						<label>
-							x: <input type="number" defaultValue={data.x} onChange={e => XYZChanged('x', e)} className="w-12 border-b border-white" />
-						</label>
-						<label>
-							y: <input type="number" defaultValue={data.y} onChange={e => XYZChanged('y', e)} className="w-12 border-b border-white" />
-						</label>
-						<label>
-							z: <input type="number" defaultValue={data.z} onChange={e => XYZChanged('z', e)} className="w-12 border-b border-white" />
-						</label>
+						<CoordInput label="x" value={data.x} onChange={v => portalUpdated('x', v)} />
+						<CoordInput label="y" value={data.y} onChange={v => portalUpdated('y', v)} />
+						<CoordInput label="z" value={data.z} onChange={v => portalUpdated('z', v)} />
 					</div>
 					{exitInfo && <div className="pt-1">
 						{data.isNether ? 'Overworld' : 'Nether'}: {showPoint(exitInfo.ideal)}
