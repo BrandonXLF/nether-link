@@ -1,95 +1,12 @@
-'use client';
-
-import Portal from "@/classes/Portal";
-import ConnectionList from "@/components/connection-list";
-import Box from "@/components/box";
-import PortalList from "@/components/portal-list";
-import Visualizer from "@/components/visualizer";
-import StoredPortal from "@/types/StoredPortal";
-import getExits from "@/utils/get-exits";
-import { useEffect, useState } from "react";
 import MainHeading from "@/components/main-heading";
-import BooleanButtons from "@/components/boolean-buttons";
+import StoreProvider from "@/components/store-provider";
+import Tool from "@/components/tool";
 
-function loadArray(name: string, isNether: boolean) {
-  try {
-    const arr: StoredPortal[] = JSON.parse(localStorage.getItem(name) ?? '[]');
-    return arr.map(stored => Portal.fromStored(stored, isNether));
-  } catch {
-    return [];
-  }
-}
-
-export default function Tool() {
-  const [overworld, setOverworld] = useState<Portal[]>([]);
-  const [nether, setNether] = useState<Portal[]>([]);
-  const [loaded, setLoaded] = useState(false);
-  const [showExitOnly, setShowExitOnly] = useState(true);
-
-  useEffect(()=> {
-    setOverworld(loadArray('overworld', false));
-    setNether(loadArray('nether', true));
-    setLoaded(true);
-  }, [])
-
-  useEffect(() => {
-    if (!loaded) return;
-    localStorage.setItem('overworld', JSON.stringify(overworld));
-  }, [overworld, loaded]);
-
-  useEffect(() => {
-    if (!loaded) return;
-    localStorage.setItem('nether', JSON.stringify(nether));
-  }, [nether, loaded]);
-
-  const overworldExits = getExits(overworld, nether);
-  const netherExits = getExits(nether, overworld);
-
+export default function ToolPage() {
   return <div>
     <MainHeading />
-    <Box className="border-b border-gray-500">
-      <BooleanButtons
-        trueText="Show exits"
-        falseText="Show all in range"
-        value={showExitOnly}
-        onChange={setShowExitOnly}
-      />
-    </Box>
-    <div className="flex justify-between flex-wrap">
-      <div className="flex-1 max-lg:basis-full">
-        <Box title="Overworld Portals">
-          {!loaded
-            ? 'Loading...'
-            : <PortalList
-              portals={overworld}
-              getExits={() => overworldExits.values()}
-              portalsChanged={setOverworld}
-              isNether={false}
-              showExitOnly={showExitOnly}
-            />}
-        </Box>
-        <Box title="Nether Portals" className="border-t border-gray-500">
-          {!loaded
-            ? 'Loading...'
-            : <PortalList
-              portals={nether}
-              getExits={() => netherExits.values()}
-              portalsChanged={setNether}
-              isNether={true}
-              showExitOnly={showExitOnly}
-            />}
-        </Box>
-      </div>
-      <div className="flex-1 flex flex-col lg:max-w-md lg:border-l max-lg:border-t border-gray-500">
-        <Box title="Overlay Map">
-          <div className="max-w-md">
-            <Visualizer exitMaps={[overworldExits, netherExits]} />
-          </div>
-        </Box>
-        <Box title="Connections" className="border-t border-gray-500">
-          <ConnectionList overworldExits={overworldExits} netherExits={netherExits} />
-        </Box>
-      </div>
-    </div>
+    <StoreProvider>
+      <Tool />
+   </StoreProvider>
   </div>
 }

@@ -1,6 +1,5 @@
-import Positioned from "./Positioned";
+import Point from "./Point";
 
-export default interface StoredPortal extends Positioned {
-	uuid: string;
+export default interface StoredPortal extends Point {
 	name: string;
 }

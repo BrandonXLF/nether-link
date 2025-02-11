@@ -1,9 +1,13 @@
-import Portal from "@/classes/Portal";
-import ExitInfo from "@/types/ExitInfo";
+import { useAppSelector } from "@/store/hooks";
+import { selectNetherExits, selectOverworldExits } from "@/store/selectExitMaps";
+import { getOverworldPos, showPortal } from "@/utils/portalUtils";
 
-export default function Visualizer({ exitMaps }: Readonly<{
-	exitMaps: Map<Portal, ExitInfo>[]
-}>) {
+export default function Visualizer() {
+	const exitLists = [
+		useAppSelector(selectOverworldExits),
+		useAppSelector(selectNetherExits)
+	];
+
 	let minX = Infinity
 	let maxX = -Infinity;
 	let minZ = Infinity
@@ -12,11 +16,12 @@ export default function Visualizer({ exitMaps }: Readonly<{
 	const circles = [];
 	const lines = [];
 
-	for (const exits of exitMaps) {
-		for (const [from, exit] of exits) {
+	for (const exits of exitLists) {
+		for (const [id, exit] of Object.entries(exits)) {
+			const from = exit.portal;
 			const fill = from.isNether ? 'fill-red-500' : 'fill-green-500';
-			const pos = from.getOverworldPos();
-			const toPos = exit.closest?.[0].getOverworldPos();
+			const pos = getOverworldPos(from);
+			const toPos = exit.closest && getOverworldPos(exit.closest[1]);
 
 			if (pos.x < minX) minX = pos.x;
 			if (pos.x > maxX) maxX = pos.x;
@@ -24,8 +29,8 @@ export default function Visualizer({ exitMaps }: Readonly<{
 			if (pos.z > maxZ) maxZ = pos.z;
 
 			circles.push(
-				<circle key={from.uuid} cx={pos.x} cy={pos.z} r="1.5%" className={fill}>
-					<title>{from.toString()}</title>
+				<circle key={id} cx={pos.x} cy={pos.z} r="1.5%" className={fill}>
+					<title>{showPortal(from)}</title>
 				</circle>
 			);
 
@@ -37,7 +42,7 @@ export default function Visualizer({ exitMaps }: Readonly<{
 
 				lines.push(
 					<path
-						key={from.uuid}
+						key={id}
 						d={`M ${pos.x} ${pos.z} Q ${control.x} ${control.z} ${toPos.x} ${toPos.z}`}
 						markerEnd="url(#arrow)"
 					/>

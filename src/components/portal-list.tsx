@@ -1,46 +1,54 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PortalInput from "./portal-input";
-import Portal from "@/classes/Portal";
-import ExitInfo from "@/types/ExitInfo";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { add, remove, update } from "@/store/portalSlice";
+import Portal from "@/types/Portal";
+import { nextPortalId } from "@/utils/portalUtils";
+import { portalTypeMap } from "@/store/selectExitMaps";
 
-export default function PortalList({ portals, getExits, portalsChanged, isNether, showExitOnly }: Readonly<{
-	portals: Portal[],
-	getExits: () => Iterator<ExitInfo>,
-	portalsChanged: (newList: Portal[]) => void,
-	isNether: boolean,
-	showExitOnly?: boolean
+export default function PortalList({ type, isNether }: Readonly<{
+	type: 'overworld' | 'nether',
+	isNether: boolean
 }>) {
-	const [nextPortal, setNextPortal] = useState<Portal>(Portal.newBlank(isNether));
-	const exits = getExits();
+	const makeNext = useCallback(() => ([
+		nextPortalId(),
+		{
+			x: 0,
+			y: 0,
+			z: 0,
+			name: '',
+			isNether,
+		}
+	] as [string, Portal]), [isNether]);
 
-	return <div>{[...portals, nextPortal].map(portal => {
-		const exitInfo = exits.next().value;
-		const isNew = portal === nextPortal;
+	const [nextPortal, setNextPortal] = useState<[string, Portal]>(makeNext);
 
-		return <div key={portal.uuid} className="mb-4">
+	const portals = useAppSelector(state => state.portals[type]);
+	const exits = useAppSelector(portalTypeMap[type]);
+	const dispatch = useAppDispatch();
+
+	return <div>{[...Object.entries(portals), nextPortal].map(([id, portal]) => {
+		const isNew = id === nextPortal[0];
+
+		return <div key={id} className="mb-4">
 			<PortalInput
-				portal={portal}
-				exitInfo={exitInfo}
+				data={portal}
+				exitInfo={exits[id]}
 				isNew={isNew}
-				showExitOnly={showExitOnly}
 				portalUpdated={(prop, value) => {
-					const newPortals = [...portals];
-					
 					if (isNew) {
-						newPortals.push(nextPortal);
-						nextPortal[prop] = value;
+						dispatch(add({ type, id, portal: {
+							...portal,
+							[prop]: value
+						} }));
 
-						setNextPortal(Portal.newBlank(isNether));
-					} else {
-						portal[prop] = value;
+						setNextPortal(makeNext);
+						return;
 					}
-
-					portalsChanged(newPortals);
+	
+					dispatch(update({ type, id, prop, value }));
 				}}
-				portalRemoved={() => {
-					const newPortals = portals.filter(iPortal => iPortal.uuid !== portal.uuid);
-					portalsChanged(newPortals);
-				}}
+				portalRemoved={() => dispatch(remove({ type, id }))}
 			/>
 		</div>
 	})}</div>;

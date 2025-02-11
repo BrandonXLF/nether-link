@@ -1,28 +1,35 @@
-import Portal from "@/classes/Portal";
 import ExitInfo from "@/types/ExitInfo";
-import Pos from "@/types/pos";
+import Portal from "@/types/Portal";
+import Point from "@/types/Point";
+import { getIdealExit } from "./portalUtils";
 
-function inRange(from: Pos, to: Pos, isNether: boolean) {
+function inRange(from: Point, to: Point, isNether: boolean) {
 	const sqRadius = isNether ? 16 : 128;
 	return Math.abs(from.x - to.x) <= sqRadius && Math.abs(from.z - to.z) <= sqRadius;
 }
 
-function distance(from: Pos, to: Pos) {
+function distance(from: Point, to: Point) {
 	return Math.sqrt(Math.pow(from.x - to.x, 2) + Math.pow(from.y - to.y, 2) + Math.pow(from.z - to.z, 2));
 }
 
-export default function getExits(fromList: Portal[], toList: Portal[]): Map<Portal, ExitInfo> {
-	return new Map(fromList.map(from => [from, getExit(from, toList)]));
+export default function getExits(
+	fromPortals: Record<string, Portal>,
+	toPortals: Record<string, Portal>
+): Record<string, ExitInfo> {
+	return Object.fromEntries(
+		Object.entries(fromPortals).map(([id, from]) => [id, getExit(from, toPortals)])
+	);
 }
 
-function getExit(fromPortal: Portal, toList: Portal[]): ExitInfo {
-	let min;
+function getExit(fromPortal: Portal, toPortals: Record<string, Portal>): ExitInfo {
+	let minId;
+	let minName;
 	let minDist = Infinity;
 
-	const from = fromPortal.getIdealExit();
-	const nearby: [Portal, number][] = [];
+	const from = getIdealExit(fromPortal);
+	const nearby: [string, Portal, number][] = [];
 	
-	for (const toPortal of toList) {
+	for (const [toId, toPortal] of Object.entries(toPortals)) {
 		if (!inRange(from, toPortal, toPortal.isNether)) {
 			continue;
 		}
@@ -30,16 +37,18 @@ function getExit(fromPortal: Portal, toList: Portal[]): ExitInfo {
 		const dist = distance(from, toPortal);
 
 		if (dist < minDist) {
-			min = toPortal;
+			minId = toId;
+			minName = toPortal;
 			minDist = dist;
 		}
 
-		nearby.push([toPortal, dist]);
+		nearby.push([toId, toPortal, dist]);
 	}
 
 	return {
+		portal: fromPortal,
 		ideal: from,
-		closest: min ? [min, minDist] : null,
+		closest: minName ? [minId!, minName, minDist] : null,
 		nearby: nearby
 	};
 }

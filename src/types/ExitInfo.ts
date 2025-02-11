@@ -1,8 +1,9 @@
-import Portal from "@/classes/Portal";
-import Point from "@/classes/Point";
+import Point from "./Point";
+import Portal from "./Portal";
 
 export default interface ExitInfo {
+	portal: Portal,
 	ideal: Point,
-	closest: [Portal, number] | null;
-	nearby: [Portal, number][];
+	closest: [string, Portal, number] | null;
+	nearby: [string, Portal, number][];
 };

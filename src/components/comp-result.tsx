@@ -1,29 +1,32 @@
 import ExitInfo from "@/types/ExitInfo";
 import ExitListing from "./exit-listing";
+import { showPoint } from "@/utils/pointUtils";
+import { useAppSelector } from "@/store/hooks";
 
-export default function CompResult({ exitInfo: { ideal, closest, nearby }, showExitOnly }: Readonly<{
-	exitInfo: ExitInfo,
-	showExitOnly?: boolean
+export default function CompResult({ exitInfo: { ideal, closest, nearby } }: Readonly<{
+	exitInfo: ExitInfo
 }>) {
+	const showAll = useAppSelector(state => state.options.showAll);
+
 	if (!closest) {
 		return <div>
-			{'=>'} <em>New portal around {ideal.toString()}</em>
+			{'=>'} <em>New portal around {showPoint(ideal)}</em>
 		</div>;
 	}
 
-	if (showExitOnly) {
+	if (!showAll) {
 		return <div>
-			<ExitListing portal={closest[0]} dist={closest[1]} />
+			<ExitListing portal={closest[1]} dist={closest[2]} />
 		</div>;
 	}
 
 	nearby.sort((a, b) => {
-		return a[1] - b[1];
+		return a[2] - b[2];
 	});
 
 	return <ul>
-		{nearby.map(([portal, dist]) => {
-			return <li key={portal.uuid}>
+		{nearby.map(([id, portal, dist]) => {
+			return <li key={id}>
 				<ExitListing portal={portal} dist={dist} />
 			</li>;
 		})}
