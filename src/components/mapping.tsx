@@ -1,5 +1,5 @@
 import Portal from "@/types/Portal";
-import PortalName from "./portal-name";
+import PortalName from "./PortalName";
 
 export default function Mapping({ fromPortal, toPortal, bidirectional, reverse }: Readonly<{
     fromPortal?: Portal,

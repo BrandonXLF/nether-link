@@ -1,6 +1,6 @@
-import MainHeading from "@/components/main-heading";
-import StoreProvider from "@/components/store-provider";
-import Tool from "@/components/tool";
+import MainHeading from "@/components/MainHeading";
+import StoreProvider from "@/components/StoreProvider";
+import Tool from "@/components/Tool";
 
 export default function ToolPage() {
   return <div>

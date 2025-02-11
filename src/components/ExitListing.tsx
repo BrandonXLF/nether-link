@@ -1,5 +1,5 @@
-import Portal from "@/classes/Portal";
-import PortalName from "./portal-name";
+import Portal from "@/types/Portal";
+import PortalName from "./PortalName";
 
 export default function ExitListing({ portal, dist }: Readonly<{
     portal: Portal,

@@ -1,4 +1,4 @@
-import Box from "./box";
+import Box from "./Box";
 
 export default function MainHeading() {
 	return <hgroup className="relative border-b border-gray-500 bg-red-950 min-h-20">

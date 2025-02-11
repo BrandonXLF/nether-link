@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import BooleanButtons from "./boolean-buttons";
+import BooleanButtons from "./BooleanButtons";
 import { set } from "@/store/optionsSlice";
 
 export default function ShowAllToggle() {

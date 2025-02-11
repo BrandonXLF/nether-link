@@ -1,4 +1,4 @@
-import Mapping from "./mapping";
+import Mapping from "./Mapping";
 import { useAppSelector } from "@/store/hooks";
 import { selectNetherExits, selectOverworldExits } from "@/store/selectExitMaps";
 

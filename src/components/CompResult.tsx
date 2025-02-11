@@ -1,5 +1,5 @@
 import ExitInfo from "@/types/ExitInfo";
-import ExitListing from "./exit-listing";
+import ExitListing from "./ExitListing";
 import { showPoint } from "@/utils/pointUtils";
 import { useAppSelector } from "@/store/hooks";
 

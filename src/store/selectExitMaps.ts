@@ -1,4 +1,4 @@
-import getExits from "@/utils/get-exits";
+import getExits from "@/utils/getExits";
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from ".";
 

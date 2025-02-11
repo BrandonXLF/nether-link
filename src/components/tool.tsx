@@ -1,10 +1,10 @@
 'use client';
 
-import ConnectionList from "@/components/connection-list";
-import Box from "@/components/box";
-import PortalList from "@/components/portal-list";
-import Visualizer from "@/components/visualizer";
-import ShowAllToggle from "./show-all-toggle";
+import ConnectionList from "@/components/ConnectionList";
+import Box from "@/components/Box";
+import PortalList from "@/components/PortalList";
+import Visualizer from "@/components/Visualizer";
+import ShowAllToggle from "./ShowAllToggle";
 
 export default function Tool() {
   return <>

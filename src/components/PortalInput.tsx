@@ -1,6 +1,6 @@
 import ExitInfo from "@/types/ExitInfo";
 import { FormEvent } from "react"
-import CompResult from "./comp-result";
+import CompResult from "./CompResult";
 import Portal from "@/types/Portal";
 import { showPoint } from "@/utils/pointUtils";
 

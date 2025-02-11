@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import PortalInput from "./portal-input";
+import PortalInput from "./PortalInput";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { add, remove, update } from "@/store/portalSlice";
 import Portal from "@/types/Portal";
