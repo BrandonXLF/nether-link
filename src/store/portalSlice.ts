@@ -39,9 +39,9 @@ export const portalSlice = createSlice({
       type: keyof PortalStoreState,
       id: string,
       prop: keyof Portal,
-      value: Portal[typeof action.payload.prop]
+      value: Portal[keyof Portal]
     }>) => {
-      state[action.payload.type][action.payload.id][action.payload.prop] = action.payload.value;
+      (state[action.payload.type][action.payload.id][action.payload.prop] as Portal[keyof Portal]) = action.payload.value;
     }
   }
 })
