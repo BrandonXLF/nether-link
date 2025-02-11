@@ -11,11 +11,15 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.config({
-    extends: ['next/core-web-vitals', 'next/typescript'],
+    extends: [
+      "next/core-web-vitals",
+      "next/typescript",
+      "plugin:prettier/recommended",
+    ],
     rules: {
-      '@next/next/no-title-in-document-head': 'off',
-    }
-  })
+      "@next/next/no-title-in-document-head": "off",
+    },
+  }),
 ];
 
 export default eslintConfig;
