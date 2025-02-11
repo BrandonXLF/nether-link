@@ -49,8 +49,7 @@ export const portalSlice = createSlice({
 export const { load, add, remove, update } = portalSlice.actions
 
 export default persistReducer({
-  keyPrefix: 'nether-link-',
-  key: portalSlice.name,
+  key: `nether-link-${portalSlice.name}`,
   storage,
   transforms: [
     createTransform(

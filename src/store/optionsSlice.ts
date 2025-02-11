@@ -24,7 +24,6 @@ export const optionsSlice = createSlice({
 export const { set } = optionsSlice.actions
 
 export default persistReducer({
-  keyPrefix: 'nether-link-',
-  key: optionsSlice.name,
+  key: `nether-link-${optionsSlice.name}`,
   storage,
 }, optionsSlice.reducer);
